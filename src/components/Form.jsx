@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import Button from './Button';
 
+import { addTodo } from '../actions';
+
 class Form extends React.Component {
     constructor(props) {
         super(props);
@@ -11,8 +13,18 @@ class Form extends React.Component {
             title: ''
         };
 
+        this.store = this.props.store;
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.unsubscribe = this.store.subscribe(() => this.forceUpdate());
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
     }
 
     handleSubmit(event) {
@@ -21,7 +33,7 @@ class Form extends React.Component {
         const title = this.state.title;
 
         if (title) {
-            this.props.onAdd(title);
+            this.store.dispatch(addTodo(title));
             this.setState({ title: '' });
         }
     }
