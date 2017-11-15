@@ -13,18 +13,8 @@ class Form extends React.Component {
             title: ''
         };
 
-        this.store = this.props.store;
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    componentDidMount() {
-        this.unsubscribe = this.store.subscribe(() => this.forceUpdate());
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
     }
 
     handleSubmit(event) {
@@ -33,7 +23,7 @@ class Form extends React.Component {
         const title = this.state.title;
 
         if (title) {
-            this.store.dispatch(addTodo(title));
+            this.props.onAdd(title);
             this.setState({ title: '' });
         }
     }
