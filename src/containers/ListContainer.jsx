@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { deleteTodo, toggleTodo, editTodo } from '../actions';
 import List from '../components/List';
 
 class ListContainer extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
 
-        this.store = this.props.store;
+        this.store = this.context.store;
 
         this.handleDelete = this.handleDelete.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
@@ -47,5 +48,9 @@ class ListContainer extends React.Component {
         );        
     }
 }
+
+ListContainer.contextTypes = {
+  store: PropTypes.object
+};
 
 export default ListContainer;

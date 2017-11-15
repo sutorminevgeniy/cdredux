@@ -8,11 +8,11 @@ import FormContainer from './containers/FormContainer';
 function App({store}) {
     return (
         <main>
-            <HeaderContainer store={store} />
+            <HeaderContainer />
 
-            <ListContainer store={store} />
+            <ListContainer />
 
-            <FormContainer store={store} />
+            <FormContainer />
         </main>
     );
 }
