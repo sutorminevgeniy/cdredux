@@ -2,30 +2,19 @@ import { GET_TODOS, ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO } from '../act
 
 function todoReducer(state = {}, action) {
     switch (action.type) {
-        case ADD_TODO:
-            return {
-                id: action.id,
-                title: action.title,
-                completed: false
-            };
-
         case TOGGLE_TODO:
-            if (state.id !== action.id) {
+            if (state.id !== action.todo.id) {
                 return state;
             }
 
-            return Object.assign({}, state, {
-                completed: !state.completed
-            });
+            return action.todo;
 
         case EDIT_TODO:
-            if (state.id !== action.id) {
+            if (state.id !== action.todo.id) {
                 return state;
             }
 
-            return Object.assign({}, state, {
-                title: action.title
-            });
+            return action.todo;
 
         default:
             return state;
@@ -38,7 +27,7 @@ export default function reducer(state = [], action) {
             return action.todos;
 
         case ADD_TODO:
-            return [...state, todoReducer(undefined, action)];
+            return [...state, action.todo];
 
         case DELETE_TODO:
             const index = state.findIndex(todo => todo.id === action.id);
