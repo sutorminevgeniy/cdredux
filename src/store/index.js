@@ -22,9 +22,11 @@ const addLogSupport = store => next => action => {
   console.log('Состояние до', store.getState());
   console.log('Действие', action.type, action);
 
-  next(action);
+  let result = next(action);
 
   console.log('Состояние после', store.getState());
+
+  return result;
 };
 
 const store = createStore(reducer);
