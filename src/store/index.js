@@ -2,27 +2,27 @@ import { createStore } from 'redux';
 
 import reducer from '../reducers';
 
-const addPromiseSupport = store => dispatch => action => {
+const addPromiseSupport = store => next => action => {
   if(typeof action.then === 'function') {
-    return action.then(dispatch);
+    return action.then(next);
   }
 
-  return dispatch(action);
+  return next(action);
 };
 
-const addThunkSupport = store => dispatch => action => {
+const addThunkSupport = store => next => action => {
   if(typeof action === 'function') {
-    return action(dispatch);
+    return action(next);
   }
 
-  return dispatch(action);
+  return next(action);
 };
 
-const addLogSupport = store => dispatch => action => {
+const addLogSupport = store => next => action => {
   console.log('Состояние до', store.getState());
   console.log('Действие', action.type, action);
 
-  dispatch(action);
+  next(action);
 
   console.log('Состояние после', store.getState());
 };
