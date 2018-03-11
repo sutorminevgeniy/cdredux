@@ -2,9 +2,7 @@ import { createStore } from 'redux';
 
 import reducer from '../reducers';
 
-function addPromiseSupport(store) {
-  const dispatch = store.dispatch;
-
+function addPromiseSupport(store, dispatch) {
   return action => {
     if(typeof action.then === 'function') {
       return action.then(dispatch);
@@ -14,9 +12,7 @@ function addPromiseSupport(store) {
   };
 }
 
-function addThunkSupport(store) {
-  const dispatch = store.dispatch;
-
+function addThunkSupport(store, dispatch) {
   return action => {
     if(typeof action === 'function') {
       return action(dispatch);
@@ -26,9 +22,7 @@ function addThunkSupport(store) {
   };
 }
 
-function addLogSupport(store) {
-  const dispatch = store.dispatch;
-
+function addLogSupport(store, dispatch) {
   return action => {
     console.log('Состояние до', store.getState());
     console.log('Действие', action.type, action);
@@ -42,6 +36,6 @@ function addLogSupport(store) {
 const store = createStore(reducer);
 const middlewares = [addLogSupport, addPromiseSupport, addThunkSupport]
 
-middlewares.forEach(middleware => store.dispatch = middleware(store));
+middlewares.forEach(middleware => store.dispatch = middleware(store, store.dispatch));
 
 export default store;
