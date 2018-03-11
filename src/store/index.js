@@ -40,9 +40,8 @@ function addLogSupport(store) {
 }
 
 const store = createStore(reducer);
+const middlewares = [addLogSupport, addPromiseSupport, addThunkSupport]
 
-store.dispatch = addLogSupport(store);
-store.dispatch = addPromiseSupport(store);
-store.dispatch = addThunkSupport(store);
+middlewares.forEach(middleware => store.dispatch = middleware(store));
 
 export default store;
