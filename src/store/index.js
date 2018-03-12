@@ -1,4 +1,4 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 
 import reducer from '../reducers';
 
@@ -29,11 +29,7 @@ const addLogSupport = store => next => action => {
   return result;
 };
 
-function applyMiddleware(store, ...middlewares) {
-  middlewares.slice().reverse().forEach(middleware => store.dispatch = middleware(store)(store.dispatch));
-}
-
-const store = createStore(reducer);
-applyMiddleware(store, addLogSupport, addPromiseSupport, addThunkSupport);
+const store = createStore(reducer, applyMiddleware(addLogSupport, addPromiseSupport, addThunkSupport));
+;
 
 export default store;
