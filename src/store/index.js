@@ -29,9 +29,11 @@ const addLogSupport = store => next => action => {
   return result;
 };
 
-const store = createStore(reducer);
-const middlewares = [addLogSupport, addPromiseSupport, addThunkSupport]
+function applyMiddleware(store, ...middlewares) {
+  middlewares.slice().reverse().forEach(middleware => store.dispatch = middleware(store)(store.dispatch));
+}
 
-middlewares.slice().reverse().forEach(middleware => store.dispatch = middleware(store)(store.dispatch));
+const store = createStore(reducer);
+applyMiddleware(store, addLogSupport, addPromiseSupport, addThunkSupport);
 
 export default store;
