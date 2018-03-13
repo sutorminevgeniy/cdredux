@@ -7,6 +7,6 @@ import localStorage from '../middleware/local-storage'
 
 import reducer from '../reducers';
 
-const store = createStore(reducer, applyMiddleware(thunk, promise, localStorage, logger));
+const store = createStore(reducer, applyMiddleware(thunk, promise, localStorage('todos'), logger));
 
 export default store;
