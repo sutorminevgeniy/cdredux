@@ -1,3 +1,17 @@
+export function loadState(key = 'state') {
+  try {
+    let json = localStorage.getItem(key);
+
+    if(json === null) {
+      return undefined
+    } else {
+      return JSON.parse(json);
+    }
+  } catch(error) {
+    return undefined
+  }
+};
+
 export default key => store => next => action => {
   let result =next(action);
 

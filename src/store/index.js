@@ -3,10 +3,11 @@ import promise from 'redux-promise';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
-import localStorage from '../middleware/local-storage'
+import localStorage, { loadState } from '../middleware/local-storage'
 
 import reducer from '../reducers';
 
-const store = createStore(reducer, applyMiddleware(thunk, promise, localStorage('todos'), logger));
+const initialState = loadState()
+const store = createStore(reducer, initialState, applyMiddleware(thunk, promise, localStorage(), logger));
 
 export default store;
